@@ -238,7 +238,7 @@ type ERC721Token @entity {
 	approval: Account!
 	uri: String
 	transfers: [ERC721Transfer!]! @derivedFrom(field: "token")
-	asNaut: Naut!
+	asNaut: Naut
 }
 type ERC721Operator @entity {
 	id: ID!
