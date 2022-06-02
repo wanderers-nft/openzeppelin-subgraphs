@@ -2,6 +2,7 @@
 
 ### 0.1.10
 * Fix `Naut` not updating tokens when base URI is updated
+* Implement `Planet` module
 
 ### 0.1.9
 * Implement `Naut` module
