@@ -21,7 +21,7 @@ import {
 import { handleApproval, handleTransfer } from './erc721'
 import { fetchPlanet } from '../fetch/planet'
 import { BigInt } from '@graphprotocol/graph-ts'
-import { Planet } from '../../generated/schema'
+import { ERC721Token, Planet } from '../../generated/schema'
 
 export function handlePlanetTransfer(event: TransferEvent): void {
 	// call erc721's handletransfer in case we fire first
@@ -92,35 +92,26 @@ export function handlePlanetDataUnlock(event: DataUnlockEvent): void {
 }
 
 export function handlePlanetDefaultStateUpdate(event: DefaultStateUpdateEvent): void {
-	// If we start from 0 and go to totalSupply, not every Planet will be covered
-  	// because some planets do not exist between 0..totalSupply. Therefore
-  	// we will keep track of how many Planets we have actually modified.
-  	// When seen == totalSupply, we know we have updated every Planet.
-
 	let planetContract = PlanetContract.bind(event.address);
-	let totalSupply = planetContract.totalSupply();
 	let defaultState = planetContract.defaultState();
   
 	let contract = fetchERC721(event.address)
 	if (contract == null) {
 		return;
 	}
-	let cur = 0;
-	let seen = 0;
-	while (true) {
-		let planet = Planet.load(cur.toString());
-		if (!planet) {
-			cur += 1;
-			continue;
-		}
+
+	// Fetch every planet in the contract
+	let tokens = contract.tokens;
+
+	for (let i = 0; i < tokens.length; i++) {
+		// Load token, fetch planet
+		let token = ERC721Token.load(tokens[i]);
+		let planet = fetchPlanet(token);
+
+		// If planet does not have override enabled, update the state
 		if (!planet.enabled) {
 			planet.state = defaultState;
 			planet.save();
-		}
-		cur += 1;
-		seen += 1;
-		if (seen.toString() == totalSupply.toString()) {
-			break;
 		}
 	}
 }
