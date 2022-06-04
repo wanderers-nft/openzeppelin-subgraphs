@@ -1,13 +1,21 @@
 # Changelog
 
-### 0.1.7-1 (2021-01-27)
- * `Governor`: fix vulnerability to ill-formed ProposalCreated events
+### 0.1.9
+* Implement `Naut` module
+* Fix `ERC721` and `ERC1155` implementations not updating token URIs on every load; they were only set once on initialisation and never updated.
+
+### All changes below this line were inherited from the OZ package.
+
+### 0.1.8 (2022-03-18)
  * Update dependency to @graphprotocol/graph-cli version 0.29.x
  * Update dependency to @graphprotocol/graph-ts version 0.26.x
  * Update dependency to @amxx/graphprotocol-utils version 1.1.0
  * Use Bytes for some entities ID
  * Make events and some other entites immutable
  * `Governor`: index the "counting mode" for OZ governors
+
+### 0.1.7-1 (2021-01-27)
+ * `Governor`: fix vulnerability to ill-formed ProposalCreated events
 
 ### 0.1.7 (2021-01-27)
  * `ERC1155`: fetch token uri on minting.
