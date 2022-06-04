@@ -106,6 +106,9 @@ export function handlePlanetDefaultStateUpdate(event: DefaultStateUpdateEvent): 
 	for (let i = 0; i < tokens.length; i++) {
 		// Load token, fetch planet
 		let token = ERC721Token.load(tokens[i]);
+		if (!token) {
+			continue;
+		}
 		let planet = fetchPlanet(token);
 
 		// If planet does not have override enabled, update the state
