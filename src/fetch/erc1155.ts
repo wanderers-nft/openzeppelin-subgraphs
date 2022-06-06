@@ -47,15 +47,16 @@ export function fetchERC1155Token(contract: ERC1155Contract, identifier: BigInt)
 	let token = ERC1155Token.load(id)
 
 	if (token == null) {
-		let erc1155            = IERC1155.bind(Address.fromBytes(contract.id))
-		let try_uri            = erc1155.try_uri(identifier)
 		token                  = new ERC1155Token(id)
 		token.contract         = contract.id
 		token.identifier       = identifier
 		token.totalSupply      = fetchERC1155Balance(token as ERC1155Token, null).id
-		token.uri              = try_uri.reverted ? null : replaceURI(try_uri.value, identifier)
 		token.save()
 	}
+
+	let erc1155 = IERC1155.bind(Address.fromBytes(contract.id))
+	let try_uri = erc1155.try_uri(identifier)
+	token.uri = try_uri.reverted ? null : replaceURI(try_uri.value, identifier)
 
 	return token as ERC1155Token
 }
