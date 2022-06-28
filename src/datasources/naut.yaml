@@ -17,6 +17,8 @@
       callHandlers:
         - function: setTokenState(uint256,uint256)
           handler: handleSetTokenState
+        - function: setBaseURIForState(uint256,string)
+          handler: handleSetBaseURIForState
       eventHandlers:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleNautTransfer
