@@ -1,5 +1,7 @@
 # Changelog
 
+### 0.1.10
+
 ### 0.1.9
 * Implement `Naut` module
 * Fix `ERC721` and `ERC1155` implementations not updating token URIs on every load; they were only set once on initialisation and never updated.
