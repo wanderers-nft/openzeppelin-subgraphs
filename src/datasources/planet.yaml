@@ -14,6 +14,8 @@
       abis:
         - name: Planet
           file: {root}/node_modules/@wanderers/subgraphs-contract-abis/src/Planet.json
+        - name: IERC721
+          file: {root}/node_modules/@openzeppelin/contracts/build/contracts/IERC721Metadata.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handlePlanetTransfer
