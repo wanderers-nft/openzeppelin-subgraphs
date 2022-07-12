@@ -4,6 +4,7 @@
     {
       "module": [
         "accesscontrol",
+        "delegation",
         "erc1155",
         "erc1967upgrade",
         "erc20",
