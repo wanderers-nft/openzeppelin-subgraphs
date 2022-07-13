@@ -14,6 +14,8 @@
       abis:
         - name: ERC721MultiMetadata
           file: {root}/node_modules/@wanderers/subgraphs-contract-abis/src/ERC721MultiMetadata.json
+        - name: IERC721
+          file: {root}/node_modules/@openzeppelin/contracts/build/contracts/IERC721Metadata.json
       callHandlers:
         - function: setTokenState(uint256,uint256)
           handler: handleSetTokenState
