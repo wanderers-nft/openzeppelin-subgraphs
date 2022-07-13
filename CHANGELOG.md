@@ -3,6 +3,8 @@
 ### 0.1.10
 * Fix `Naut` not updating tokens when base URI is updated
 * Fix "could not find ABI for contract `IERC721` in `naut`"
+* Implement `Planet` module
+* Implement `Delegation` module
 
 ### 0.1.9
 * Implement `Naut` module

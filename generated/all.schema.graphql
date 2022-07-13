@@ -6,6 +6,12 @@ type Account @entity {
 	roleGrantedSender: [RoleGranted!]! @derivedFrom(field: "sender")
 	roleRevoked: [RoleRevoked!]! @derivedFrom(field: "account")
 	roleRevokedSender: [RoleRevoked!]! @derivedFrom(field: "sender")
+	asERC721: ERC721Contract
+	ERC721tokens: [ERC721Token!]! @derivedFrom(field: "owner")
+	ERC721operatorOwner: [ERC721Operator!]! @derivedFrom(field: "owner")
+	ERC721operatorOperator: [ERC721Operator!]! @derivedFrom(field: "operator")
+	ERC721transferFromEvent: [ERC721Transfer!]! @derivedFrom(field: "from")
+	ERC721transferToEvent: [ERC721Transfer!]! @derivedFrom(field: "to")
 	asERC1155: ERC1155Contract
 	ERC1155balances: [ERC1155Balance!]! @derivedFrom(field: "account")
 	ERC1155operatorOwner: [ERC1155Operator!]! @derivedFrom(field: "owner")
@@ -31,12 +37,6 @@ type Account @entity {
 	ERC20approvalsSpender: [ERC20Approval!]! @derivedFrom(field: "spender")
 	ERC20transferFromEvent: [ERC20Transfer!]! @derivedFrom(field: "from")
 	ERC20transferToEvent: [ERC20Transfer!]! @derivedFrom(field: "to")
-	asERC721: ERC721Contract
-	ERC721tokens: [ERC721Token!]! @derivedFrom(field: "owner")
-	ERC721operatorOwner: [ERC721Operator!]! @derivedFrom(field: "owner")
-	ERC721operatorOperator: [ERC721Operator!]! @derivedFrom(field: "operator")
-	ERC721transferFromEvent: [ERC721Transfer!]! @derivedFrom(field: "from")
-	ERC721transferToEvent: [ERC721Transfer!]! @derivedFrom(field: "to")
 	asGovernor: Governor
 	proposed: [Proposal!]! @derivedFrom(field: "proposer")
 	voted: [VoteReceipt!]! @derivedFrom(field: "voter")
@@ -108,6 +108,52 @@ type RoleRevoked implements Event @entity(immutable: true) {
 	role: AccessControlRole!
 	account: Account!
 	sender: Account!
+}
+type ERC721Contract @entity(immutable: true) {
+	id: Bytes!
+	asAccount: Account!
+	supportsMetadata: Boolean
+	name: String
+	symbol: String
+	tokens: [ERC721Token!]! @derivedFrom(field: "contract")
+	operators: [ERC721Operator!]! @derivedFrom(field: "contract")
+	transfers: [ERC721Transfer!]! @derivedFrom(field: "contract")
+	delegators: [ERC721Delegator!]! @derivedFrom(field: "contract")
+}
+type ERC721Token @entity {
+	id: ID!
+	contract: ERC721Contract!
+	identifier: BigInt!
+	owner: Account!
+	approval: Account!
+	uri: String
+	transfers: [ERC721Transfer!]! @derivedFrom(field: "token")
+	asNaut: Naut
+	asPlanet: Planet
+}
+type ERC721Operator @entity {
+	id: ID!
+	contract: ERC721Contract!
+	owner: Account!
+	operator: Account!
+	approved: Boolean!
+}
+type ERC721Delegator @entity {
+	id: ID!
+	contract: ERC721Contract!
+	owner: Account!
+	deleagor: Account!
+	approved: Boolean!
+}
+type ERC721Transfer implements Event @entity(immutable: true) {
+	id: ID!
+	emitter: Account!
+	transaction: Transaction!
+	timestamp: BigInt!
+	contract: ERC721Contract!
+	token: ERC721Token!
+	from: Account!
+	to: Account!
 }
 type ERC1155Contract @entity(immutable: true) {
 	id: Bytes!
@@ -219,43 +265,6 @@ type ERC20Transfer implements Event @entity(immutable: true) {
 	toBalance: ERC20Balance
 	value: BigDecimal!
 	valueExact: BigInt!
-}
-type ERC721Contract @entity(immutable: true) {
-	id: Bytes!
-	asAccount: Account!
-	supportsMetadata: Boolean
-	name: String
-	symbol: String
-	tokens: [ERC721Token!]! @derivedFrom(field: "contract")
-	operators: [ERC721Operator!]! @derivedFrom(field: "contract")
-	transfers: [ERC721Transfer!]! @derivedFrom(field: "contract")
-}
-type ERC721Token @entity {
-	id: ID!
-	contract: ERC721Contract!
-	identifier: BigInt!
-	owner: Account!
-	approval: Account!
-	uri: String
-	transfers: [ERC721Transfer!]! @derivedFrom(field: "token")
-	asNaut: Naut
-}
-type ERC721Operator @entity {
-	id: ID!
-	contract: ERC721Contract!
-	owner: Account!
-	operator: Account!
-	approved: Boolean!
-}
-type ERC721Transfer implements Event @entity(immutable: true) {
-	id: ID!
-	emitter: Account!
-	transaction: Transaction!
-	timestamp: BigInt!
-	contract: ERC721Contract!
-	token: ERC721Token!
-	from: Account!
-	to: Account!
 }
 type Governor @entity(immutable: true) {
 	id: Bytes!
@@ -389,6 +398,15 @@ type Paused implements Event @entity(immutable: true) {
 	timestamp: BigInt!
 	contract: Pausable!
 	isPaused: Boolean!
+}
+type Planet @entity {
+	id: ID!
+	token: ERC721Token!
+	name: String!
+	description: String!
+	locked: Boolean!
+	enabled: Boolean!
+	state: BigInt!
 }
 type Timelock @entity(immutable: true) {
 	id: Bytes!
