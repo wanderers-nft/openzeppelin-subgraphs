@@ -28,8 +28,9 @@ import {
 import {
 	SetTokenStateCall,
 	SetBaseURIForStateCall,
-} from "../../generated/naut/ERC721MultiMetadata";
-import { fetchNaut } from '../fetch/naut'
+} from "../../generated/naut/Wandernaut";
+
+import { fetchERC721Rift, fetchNaut } from '../fetch/naut'
 
 import { handleApproval, handleTransfer } from './erc721'
 import { Address } from '@graphprotocol/graph-ts'
@@ -95,16 +96,7 @@ export function handleSetBaseURIForState(call: SetBaseURIForStateCall): void {
 		return;
 	}
 
-	// It's very inefficient but for simplicity we refresh every token
-	let tokens = contract.tokens;
-
-	for (let i = 0; i < tokens.length; i++) {
-		let token = ERC721Token.load(tokens[i]);
-		if (token == null) {
-			continue;
-		}
-		let identifier = token.identifier;
-		let naut = fetchERC721Token(contract, identifier);
-		naut.save();		
-	}
+	let rift = fetchERC721Rift(contract, call.inputs.state);
+	rift.baseURI = call.inputs.uri;
+	rift.save();
 }

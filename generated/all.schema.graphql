@@ -119,6 +119,7 @@ type ERC721Contract @entity(immutable: true) {
 	operators: [ERC721Operator!]! @derivedFrom(field: "contract")
 	transfers: [ERC721Transfer!]! @derivedFrom(field: "contract")
 	delegators: [ERC721Delegator!]! @derivedFrom(field: "contract")
+	rifts: [ERC721Rift!]! @derivedFrom(field: "contract")
 }
 type ERC721Token @entity {
 	id: ID!
@@ -365,6 +366,12 @@ type VoteCast implements Event @entity(immutable: true) {
 	support: ProposalSupport!
 	receipt: VoteReceipt!
 	voter: Account!
+}
+type ERC721Rift @entity {
+	id: ID!
+	contract: ERC721Contract!
+	state: BigInt!
+	baseURI: String!
 }
 type Naut @entity {
 	id: ID!
