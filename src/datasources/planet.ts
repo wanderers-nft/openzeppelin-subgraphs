@@ -92,31 +92,12 @@ export function handlePlanetDataUnlock(event: DataUnlockEvent): void {
 }
 
 export function handlePlanetDefaultStateUpdate(event: DefaultStateUpdateEvent): void {
-	let planetContract = PlanetContract.bind(event.address);
-	let defaultState = planetContract.defaultState();
-  
-	let contract = fetchERC721(event.address)
+	let contract = fetchERC721(event.address);
 	if (contract == null) {
 		return;
 	}
-
-	// Fetch every planet in the contract
-	let tokens = contract.tokens;
-
-	for (let i = 0; i < tokens.length; i++) {
-		// Load token, fetch planet
-		let token = ERC721Token.load(tokens[i]);
-		if (!token) {
-			continue;
-		}
-		let planet = fetchPlanet(token);
-
-		// If planet does not have override enabled, update the state
-		if (!planet.enabled) {
-			planet.state = defaultState;
-			planet.save();
-		}
-	}
+	contract.planetDefaultState = event.params.state;
+	contract.save();
 }
 
 export function handlePlanetOverrideStateUpdate(event: OverrideStateUpdateEvent): void {

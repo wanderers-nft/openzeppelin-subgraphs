@@ -120,6 +120,7 @@ type ERC721Contract @entity(immutable: true) {
 	transfers: [ERC721Transfer!]! @derivedFrom(field: "contract")
 	delegators: [ERC721Delegator!]! @derivedFrom(field: "contract")
 	rifts: [ERC721Rift!]! @derivedFrom(field: "contract")
+	planetDefaultState: BigInt
 }
 type ERC721Token @entity {
 	id: ID!
