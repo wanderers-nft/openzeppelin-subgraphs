@@ -1,5 +1,11 @@
 # Changelog
 
+### 0.1.10
+* Add `ERC721Rift` for rift states - note that state setup in constructor() does not show up and will have to be fetched on-chain.
+* Fix "could not find ABI for contract `IERC721` in `naut`"
+* Implement `Planet` module
+* Implement `Delegation` module
+
 ### 0.1.9
 * Implement `Naut` module
 * Fix `ERC721` and `ERC1155` implementations not updating token URIs on every load; they were only set once on initialisation and never updated.

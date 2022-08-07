@@ -1,7 +1,7 @@
 {
   "name": "@wanderers/subgraphs",
   "description": "Subgraph templates for @openzeppelin/contracts, extended for the Wanderverse.",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "contributors": [
     "OpenZeppelin Community <maintainers@openzeppelin.org>",
     "Wanderers <hello@wanderers.ai>"
@@ -34,7 +34,7 @@
   "dependencies": {
     "@amxx/graphprotocol-utils": "^1.1.0",
     "@openzeppelin/contracts": "^4.6.0",
-    "@wanderers/subgraphs-contract-abis": "^1.0.0"
+    "@wanderers/subgraphs-contract-abis": "^1.2.1"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.29.2",

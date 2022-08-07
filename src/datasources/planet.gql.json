@@ -21,14 +21,7 @@
     { "name": "tokens",                  "type": "ERC721Token!",    "derived": "contract" },
     { "name": "operators",               "type": "ERC721Operator!", "derived": "contract" },
     { "name": "transfers",               "type": "ERC721Transfer!", "derived": "contract" },
-    { "name": "rifts",                   "type": "ERC721Rift!",     "derived": "contract" }
-  ]
-},{
-  "name": "ERC721Rift",
-  "fields": [
-    { "name": "contract",                "type": "ERC721Contract!" },
-    { "name": "state",                   "type": "BigInt!"         },
-    { "name": "baseURI",                 "type": "String!"         }
+    { "name": "planetDefaultState",      "type": "BigInt"                                 }
   ]
 },{
   "name": "ERC721Token",
@@ -39,7 +32,7 @@
     { "name": "approval",                "type": "Account!"                            },
     { "name": "uri",                     "type": "String"                              },
     { "name": "transfers",               "type": "ERC721Transfer!", "derived": "token" },
-    { "name": "asNaut",                  "type": "Naut"                                }
+    { "name": "asPlanet",                "type": "Planet"                              }
   ]
 },{
   "name": "ERC721Operator",
@@ -63,9 +56,13 @@
     { "name": "to",                      "type": "Account!"        }
   ]
 },{
-  "name": "Naut",
+  "name": "Planet",
   "fields": [
     { "name": "token",                   "type": "ERC721Token!" },
+    { "name": "name",                    "type": "String!"      },
+    { "name": "description",             "type": "String!"      },
+    { "name": "locked",                  "type": "Boolean!"     },
+    { "name": "enabled",                 "type": "Boolean!"     },
     { "name": "state",                   "type": "BigInt!"      }
   ]
 }]

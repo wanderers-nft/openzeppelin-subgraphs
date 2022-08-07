@@ -1,0 +1,10 @@
+{
+  "output": "generated/delegation.",
+  "datasources": [
+    {
+      "module": [
+        "delegation"
+      ]
+    }
+  ]
+}

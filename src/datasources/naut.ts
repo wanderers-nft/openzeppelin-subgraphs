@@ -1,10 +1,12 @@
 import {
+	ERC721Token,
 	ERC721Transfer,
 } from '../../generated/schema'
 
 import {
 	Approval       as ApprovalEvent,
 	ApprovalForAll as ApprovalForAllEvent,
+	IERC721,
 	Transfer       as TransferEvent,
 } from '../../generated/erc721/IERC721'
 
@@ -24,11 +26,14 @@ import {
 } from '../fetch/erc721'
 
 import {
-	SetTokenStateCall
-} from "../../generated/naut/ERC721MultiMetadata";
-import { fetchNaut } from '../fetch/naut'
+	SetTokenStateCall,
+	SetBaseURIForStateCall,
+} from "../../generated/naut/Wandernaut";
+
+import { fetchERC721Rift, fetchNaut } from '../fetch/naut'
 
 import { handleApproval, handleTransfer } from './erc721'
+import { Address } from '@graphprotocol/graph-ts'
 
 /// Called on every transfer to make sure there is always a Naut associated with a token
 export function handleNautTransfer(event: TransferEvent): void {
@@ -82,4 +87,16 @@ export function handleSetTokenState(call: SetTokenStateCall): void {
 	let naut = fetchNaut(token)
 	naut.state = call.inputs.state
 	naut.save()	
+}
+
+export function handleSetBaseURIForState(call: SetBaseURIForStateCall): void {
+	let contract = fetchERC721(call.to)
+
+	if (contract == null) {
+		return;
+	}
+
+	let rift = fetchERC721Rift(contract, call.inputs.state);
+	rift.baseURI = call.inputs.uri;
+	rift.save();
 }

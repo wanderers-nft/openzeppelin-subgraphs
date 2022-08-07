@@ -21,14 +21,7 @@
     { "name": "tokens",                  "type": "ERC721Token!",    "derived": "contract" },
     { "name": "operators",               "type": "ERC721Operator!", "derived": "contract" },
     { "name": "transfers",               "type": "ERC721Transfer!", "derived": "contract" },
-    { "name": "rifts",                   "type": "ERC721Rift!",     "derived": "contract" }
-  ]
-},{
-  "name": "ERC721Rift",
-  "fields": [
-    { "name": "contract",                "type": "ERC721Contract!" },
-    { "name": "state",                   "type": "BigInt!"         },
-    { "name": "baseURI",                 "type": "String!"         }
+    { "name": "delegators",              "type": "ERC721Delegator!","derived": "contract" }
   ]
 },{
   "name": "ERC721Token",
@@ -38,8 +31,7 @@
     { "name": "owner",                   "type": "Account!"                            },
     { "name": "approval",                "type": "Account!"                            },
     { "name": "uri",                     "type": "String"                              },
-    { "name": "transfers",               "type": "ERC721Transfer!", "derived": "token" },
-    { "name": "asNaut",                  "type": "Naut"                                }
+    { "name": "transfers",               "type": "ERC721Transfer!", "derived": "token" }
   ]
 },{
   "name": "ERC721Operator",
@@ -47,6 +39,14 @@
     { "name": "contract",                "type": "ERC721Contract!" },
     { "name": "owner",                   "type": "Account!"        },
     { "name": "operator",                "type": "Account!"        },
+    { "name": "approved",                "type": "Boolean!"        }
+  ]
+},{
+  "name": "ERC721Delegator",
+  "fields": [
+    { "name": "contract",                "type": "ERC721Contract!" },
+    { "name": "owner",                   "type": "Account!"        },
+    { "name": "deleagor",                "type": "Account!"        },
     { "name": "approved",                "type": "Boolean!"        }
   ]
 },{
@@ -61,11 +61,5 @@
     { "name": "token",                   "type": "ERC721Token!"    },
     { "name": "from",                    "type": "Account!"        },
     { "name": "to",                      "type": "Account!"        }
-  ]
-},{
-  "name": "Naut",
-  "fields": [
-    { "name": "token",                   "type": "ERC721Token!" },
-    { "name": "state",                   "type": "BigInt!"      }
   ]
 }]

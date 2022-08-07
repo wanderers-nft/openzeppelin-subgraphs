@@ -9,6 +9,7 @@ import {
 	ERC721Token,
 	ERC721Operator,
     Naut,
+	ERC721Rift,
 } from '../../generated/schema'
 
 import {
@@ -26,6 +27,7 @@ import {
 import {
 	supportsInterface,
 } from './erc165'
+import { Wandernaut } from '../../generated/naut/Wandernaut'
 
 
 export function fetchNaut(token: ERC721Token): Naut {
@@ -45,4 +47,18 @@ export function fetchNaut(token: ERC721Token): Naut {
 	token.save()
 	
     return naut as Naut;
+}
+
+export function fetchERC721Rift(contract: ERC721Contract, state: BigInt): ERC721Rift {
+	let id = contract.id.toHex().concat('/').concat(state.toHex());
+	let rift = ERC721Rift.load(id)
+	if (rift != null) {
+		return rift as ERC721Rift;
+	}
+
+	rift          = new ERC721Rift(id)
+	rift.contract = contract.id
+	rift.state    = state
+
+	return rift as ERC721Rift
 }
