@@ -5,6 +5,13 @@
 * Fix "could not find ABI for contract `IERC721` in `naut`"
 * Implement `Planet` module
 * Implement `Delegation` module
+* U: `Governor`: improve indexing of proposal queeing ([#29](https://github.com/OpenZeppelin/openzeppelin-subgraphs/pull/29))
+* U: `Governor`: track total vote weight in `ProposalSupport` ([#31](https://github.com/OpenZeppelin/openzeppelin-subgraphs/pull/31))
+* U: `Governor`: add handler for `VoteCastWithParams` events ([#31](https://github.com/OpenZeppelin/openzeppelin-subgraphs/pull/31))
+* U: `ERC721`: reset approval on `Transfer` ([#33](https://github.com/OpenZeppelin/openzeppelin-subgraphs/pull/33))
+* U: `ERC1155`: fix bug caused by duplicate write of immutable entity `ERC1155` ([#36](https://github.com/OpenZeppelin/openzeppelin-subgraphs/pull/36))
+* U: `AccessControl`: fix bug caused by duplicate write of immutable entity `Role` ([#36](https://github.com/OpenZeppelin/openzeppelin-subgraphs/pull/36))
+* U: `AccessControl`: fix bug caused by duplicate write of immutable entity `AccessControl` ([#38](https://github.com/OpenZeppelin/openzeppelin-subgraphs/pull/38))
 
 ### 0.1.9
 * Implement `Naut` module
@@ -16,16 +23,16 @@
  * Update dependency to @graphprotocol/graph-cli version 0.29.x
  * Update dependency to @graphprotocol/graph-ts version 0.26.x
  * Update dependency to @amxx/graphprotocol-utils version 1.1.0
- * Use Bytes for some entities ID
+ * Use Bytes for some entities ID ([#25](https://github.com/OpenZeppelin/openzeppelin-subgraphs/pull/25))
  * Make events and some other entites immutable
  * `Governor`: index the "counting mode" for OZ governors
 
-### 0.1.7-1 (2021-01-27)
+### 0.1.7-1 (2022-01-27)
  * `Governor`: fix vulnerability to ill-formed ProposalCreated events
 
-### 0.1.7 (2021-01-27)
- * `ERC1155`: fetch token uri on minting.
- * `ERC1155`: fix vulnerability to ill-formed TransferBatch events
+### 0.1.7 (2022-01-27)
+ * `ERC1155`: fetch token uri on minting. ([#14](https://github.com/OpenZeppelin/openzeppelin-subgraphs/pull/14))
+ * `ERC1155`: fix vulnerability to ill-formed TransferBatch events ([#16](https://github.com/OpenZeppelin/openzeppelin-subgraphs/pull/16))
 
 ### 0.1.6 (2021-11-23)
  * Include emmiter address (Account) to all Event objects
