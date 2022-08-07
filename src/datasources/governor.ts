@@ -11,12 +11,13 @@ import {
 } from '../../generated/schema'
 
 import {
-	Governor         as GovernorContract,
-	ProposalCreated  as ProposalCreatedEvent,
-	ProposalQueued   as ProposalQueuedEvent,
-	ProposalExecuted as ProposalExecutedEvent,
-	ProposalCanceled as ProposalCanceledEvent,
-	VoteCast         as VoteCastEvent,
+	Governor           as GovernorContract,
+	ProposalCreated    as ProposalCreatedEvent,
+	ProposalQueued     as ProposalQueuedEvent,
+	ProposalExecuted   as ProposalExecutedEvent,
+	ProposalCanceled   as ProposalCanceledEvent,
+	VoteCast           as VoteCastEvent,
+	VoteCastWithParams as VoteCastWithParamsEvent
 } from '../../generated/governor/Governor'
 
 import {
@@ -74,11 +75,9 @@ export function handleProposalCreated(event: ProposalCreatedEvent): void {
 export function handleProposalQueued(event: ProposalQueuedEvent): void {
 	let governor = fetchGovernor(event.address)
 
-	let eta = GovernorContract.bind(event.address).proposalEta(event.params.proposalId)
-
 	let proposal    = fetchProposal(governor, event.params.proposalId)
 	proposal.queued = true
-	proposal.eta    = eta
+	proposal.eta    = event.params.eta
 	proposal.save()
 
 	let ev         = new ProposalQueued(events.id(event))
@@ -87,7 +86,7 @@ export function handleProposalQueued(event: ProposalQueuedEvent): void {
 	ev.timestamp   = event.block.timestamp
 	ev.governor    = governor.id
 	ev.proposal    = proposal.id
-	ev.eta         = eta
+	ev.eta         = event.params.eta
 	ev.save()
 }
 
@@ -135,6 +134,34 @@ export function handleVoteCast(event: VoteCastEvent): void {
 	receipt.support = support.id
 	receipt.weight  = event.params.weight
 	receipt.reason  = event.params.reason
+	receipt.save()
+
+	let ev         = new VoteCast(events.id(event))
+	ev.emitter     = governor.id
+	ev.transaction = transactions.log(event).id
+	ev.timestamp   = event.block.timestamp
+	ev.governor    = governor.id
+	ev.proposal    = receipt.proposal
+	ev.support     = receipt.support
+	ev.receipt     = receipt.id
+	ev.voter       = receipt.voter
+	ev.save()
+}
+
+export function handleVoteCastWithParams(event: VoteCastWithParamsEvent): void {
+	let governor = fetchGovernor(event.address)
+
+	let proposal = fetchProposal(governor, event.params.proposalId)
+
+	let support = fetchProposalSupport(proposal, event.params.support)
+	support.weight += event.params.weight
+	support.save()
+
+	let receipt  = fetchVoteReceipt(proposal, event.params.voter)
+	receipt.support = support.id
+	receipt.weight  = event.params.weight
+	receipt.reason  = event.params.reason
+	receipt.params  = event.params.params
 	receipt.save()
 
 	let ev         = new VoteCast(events.id(event))
