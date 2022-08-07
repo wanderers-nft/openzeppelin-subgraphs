@@ -3,7 +3,7 @@
     network: {chain}
     source:
       address: "{address}"
-      abi: ERC721MultiMetadata
+      abi: Wandernaut
       startBlock: {startBlock}
     mapping:
       kind: ethereum/events
@@ -12,8 +12,8 @@
       entities:
         - Naut
       abis:
-        - name: ERC721MultiMetadata
-          file: {root}/node_modules/@wanderers/subgraphs-contract-abis/src/ERC721MultiMetadata.json
+        - name: Wandernaut
+          file: {root}/node_modules/@wanderers/subgraphs-contract-abis/src/Wandernaut.json
         - name: IERC721
           file: {root}/node_modules/@openzeppelin/contracts/build/contracts/IERC721Metadata.json
       callHandlers:

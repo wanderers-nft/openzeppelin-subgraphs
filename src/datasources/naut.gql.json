@@ -20,7 +20,15 @@
     { "name": "symbol",                  "type": "String"                                 },
     { "name": "tokens",                  "type": "ERC721Token!",    "derived": "contract" },
     { "name": "operators",               "type": "ERC721Operator!", "derived": "contract" },
-    { "name": "transfers",               "type": "ERC721Transfer!", "derived": "contract" }
+    { "name": "transfers",               "type": "ERC721Transfer!", "derived": "contract" },
+    { "name": "rifts",                   "type": "ERC721Rift!",     "derived": "contract" }
+  ]
+},{
+  "name": "ERC721Rift",
+  "fields": [
+    { "name": "contract",                "type": "ERC721Contract!" },
+    { "name": "state",                   "type": "BigInt!"         },
+    { "name": "baseURI",                 "type": "String!"         }
   ]
 },{
   "name": "ERC721Token",
