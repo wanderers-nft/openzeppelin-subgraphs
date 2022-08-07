@@ -1,7 +1,7 @@
 # Changelog
 
 ### 0.1.10
-* Fix `Naut` not updating tokens when base URI is updated
+* Add `ERC721Rift` for rift states - note that state setup in constructor() does not show up and will have to be fetched on-chain.
 * Fix "could not find ABI for contract `IERC721` in `naut`"
 * Implement `Planet` module
 * Implement `Delegation` module
